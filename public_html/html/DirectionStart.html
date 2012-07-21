@@ -1,0 +1,46 @@
+<html>
+	<head>
+		<title>"WMA"</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"> </script>
+		<script type="text/javascript" src="../js/JSLibrary.js"></script>
+		
+		<script>
+			$(document).ready(function(){
+				$("#continue").live('click', function(){
+					setStartingAddress($("#startAddress").val(), $("#borough").val());
+				});
+			});		
+		</script>
+	</head>
+	
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				Starting Location
+			</div>
+			
+			<div data-role="content">
+				<label for="select-choice-min">Address:</label>
+				<input type="text" name="name" value="" id="startAddress"/>
+				<label for="select-choice-min">Borough:</label>
+				<select name="select-choice-0" id="borough">
+					<option value="Manhattan">Manhattan</option>
+					<option value="Brooklyn">Brooklyn</option>
+					<option value="Queens">Queens</option>
+					<option value="TheBronx">The Bronx</option>
+					<option value="StatenIsland">Staten Island</option>
+				</select>
+				<div data-role="button" id="continue">
+					<a href="DirectionFinal.html">Continue</a>
+				</div>
+			</div>
+			
+			<div data-role="footer">
+				<h5>Copyright 2012, Team Rocket</h5>
+			</div>
+		</div>	
+	</body>
+</html>

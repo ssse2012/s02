@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>	
+	<head>
+		<title>"WMA"</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"> </script>
+		<script type="text/javascript" src="../js/JSLibrary.js"></script>
+		<script>
+			function testEquality(curr, choice)
+			{		
+						if($("#startPort").val() == $("#endPort").val())
+						{	
+							alert("NOOOOO!!!!");	
+							if(choice == 1)	
+							{
+								console.log(curr + "\n" + choice);
+								if($("#endPort").val() == "World Financial Center")
+								{
+									$("#startPort").val("Whitehall Terminal Manhattan");
+								}
+								else
+								{
+									$("#startPort").val("World Financial Center");
+								}
+							}
+							else
+							{
+								console.log(curr + "\n" + choice);
+								if($("#startPort").val() == "World Financial Center")
+								{
+									$("#endPort").val("Whitehall Terminal Manhattan");
+								}
+								else
+								{
+									$("#endPort").val("World Financial Center");
+								}
+							}
+						}
+			}
+			$(document).ready(function()
+			{		
+				$("#startPort").live('change', function(data)
+				{
+					var curr = $("#startPort").val();
+					//console.log(curr);
+					testEquality(curr, 1);					
+					$('#startPort').selectmenu('refresh', true);
+					//console.log($(this).val());
+				});
+				
+				$("#endPort").live('change', function(data)
+				{
+					var curr = $("#endPort").val();
+					//console.log(curr);
+					testEquality(curr, 2);
+					$('#endPort').selectmenu('refresh', true);
+					//console.log($(this).val());
+				});
+				go(hi.html);
+
+			});		
+			function changePage(loc1, loc2) {
+				if loc1 == "World Financial Center" then (loc1 = "WFC");
+				if loc2 == "World Financial Center" then (loc2 = "WFC");
+				if loc1 == "Bedford / Harbor Way" then (loc1 = "belford");
+				if loc2 == "Bedford / Harbor Way" then (loc2 = "WFC");
+				return ("times\/"+loc1+"_"+loc2+".html");
+			}
+			function go(loc){
+				document.getElementById('baseFrame').src = loc;
+			}
+				$('#sendDataButton').bind( 'click', function(event, ui) {
+					<!--go(changePage($("#startPort").val(), $("#endPort").val()));-->
+					console.log("successfully pressed");
+					alert(hry);
+					go(hi.html);
+				});
+		</script>
+	</head>
+	<body>
+		<div data-role="page">
+			<div data-role="header">
+				<h1>Directory</h1>
+			</div>
+			
+			<div data-role="content">
+				<a href="http://www.nywaterway.com/FerryRoutesSchedules.aspx">Check for delays and updates</a></br></br>
+				<div id="box1">
+					<label for="select-choice-min">From:</label>
+					<select name="ports" id="startPort" >
+						<option>World Financial Center</option>
+						<option>Wall Street-pier 11</option>
+						<option>Bedford / Harbor Way</option>
+						<option>Edge Water Ferry Landing</option>
+						<option>Hoboken 14th St.</option>
+						<option>Hoboken NJ Ttansit Terminal</option>
+						<option>Lincoln Harbor / Weehawken</option>
+						<option>Port Imperial / Weehawken</option>
+						<option>Newport</option>
+						<option>Paulus Hook</option>
+						<option>Port Liberte</option>
+						<option>Midtown / W. 39th St.</option>		
+					</select></br>
+				</div>
+				<div id="box2">
+					<label for="select-choice-min">To:</label>
+					<select name="morePorts" id="endPort">
+						<option>World Financial Center</option>
+						<option selected="selected">Wall Street-pier 11</option>
+						<option>Bedford / Harbor Way</option>
+						<option>Edge Water Ferry Landing</option>
+						<option>Hoboken 14th St.</option>
+						<option>Hoboken NJ Ttansit Terminal</option>
+						<option>Lincoln Harbor / Weehawken</option>
+						<option>Port Imperial / Weehawken</option>
+						<option>Newport</option>
+						<option>Paulus Hook</option>
+						<option>Port Liberte</option>
+						<option>Midtown / W. 39th St.</option>					
+						<option>NY Haverstraw</option>					
+						<option>Ossining</option>					
+						<option>NY Newburgh</option>					
+						<option>Beacon</option>
+					</select></br>
+				</div>
+				
+				<div data-role="content" style="padding: 15px">
+					<button id="sendDataButton">
+						Button
+					</button>
+				</div>
+				<iframe id="baseFrame" src="body.html" width="90%"></iframe>
+			</div>
+			
+			<div data-role="footer">
+				<h5>Copyright 2012, Team Rocket lulz</h5>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,174 @@
+<html>
+	<head>
+		<title>"WAM"</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.1/jquery.mobile-1.1.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.7.1.min.js"> </script>
+		<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"> </script>
+		<script type="text/javascript" src="js/JSLibrary.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+		<script type="text/javascript" src="html/ui/jquery.ui.map.js"></script>
+		<script type="text/javascript" src="html/ui/jquery.ui.map.extensions.js"></script>
+	</head>
+	<body>
+		<div data-role="header">
+			<h1>Waterfront Alliance Mapplication</h1>
+		</div>
+		
+		<div data-role="body">
+			<ul data-role="listview">
+				<li> <a href="html/Directory.html">Directory</a></li>
+				<li> <a href="html/MapDist.html">Find Closest Ferry</a></li>
+				<li id="mapLoad"> <a href="html/Map.html">Map</a></li>
+		</div>
+		
+		<div data-role="footer">
+			<h5>Copyright 2012, Team Rocket</h5>
+		</div>
+		
+		<script>
+			$(document).ready(function () {
+				$("#mapPage").live("pageshow", function () {
+					$("#map_canvas").gmap("refresh");
+					$("#map_canvas").gmap({ 'zoom': '7' });
+					$('#map_canvas').gmap('getCurrentPosition', function (position, status) {
+						if (status == 'OK') {
+							var _clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+							$('#map_canvas').gmap('addMarker', {
+								'position': _clientPosition,
+								'bounds': true
+							});
+						}
+					});
+				});
+				/**
+				var locs = new Array();
+				var closest;
+				var chosenFerry;
+				var lat = new Array();
+				var lng = new Array();
+				var cnt = new Array();
+				var adrs = new Array();
+				lat[1] = "41.369289";
+				lat[0] = "41.361994";
+				lng[1] = "-73.033011";
+				lng[0] = "-72.997992";
+				cnt[1] = "shtuff";
+				cnt[0] = "More shtuff";
+				adrs[1] = "56 Grouse Lane, Woodbridge, CT";
+				adrs[0] = "1 North Pease Road, Woodbridge, CT";
+				*/
+					
+					var clientPosition = "1 Pace Plaza, New York, NY";//google.maps.LatLng(40.711109,-74.004829);
+					//console.log(clientPosition);
+				$("#mapPageDist").live('pageshow', function () {
+					$("#map_canvas2").gmap("refresh");
+					$("#map_canvas2").gmap('getCurrentPosition', function (position, status) {
+						if (status == 'OK') {
+							var destination = "56 Grouse Lane, Woodbridge, CT";
+							var _clientPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+							$('#map_canvas2').gmap('addMarker', {
+								'position': _clientPosition,
+								'bounds': true
+							});
+							//$('#map_canvas2').gmap('addMarker', {
+								//'position': "4800 Ave At Port Imperial Blvd, New York, NY", 
+								//'bounds': true
+							//});
+						}
+					});
+				});
+				});
+				/**
+					//alert("stuff");
+					$("#map_canvas2").gmap("refresh");
+					//alert("even more stuff");
+					var i;
+					for (i = 0; i < lat.length; i++) {
+						console.log(i);
+						console.log(adrs[i]);
+						var directDistance = initialize(adrs[i]);
+						console.log(dist);
+						if (dist < closest || closest == null) {
+							chosenFerry = i;
+							closest = dist;
+						}
+					}
+
+					$('#map_canvas').gmap('addMarker', {
+								'position': adrs[chosenFerry],
+								'bounds': true
+						});
+				});
+
+				//distance code
+				var geocoder;
+		 var map;
+		 var addresses;
+		 var results;
+		 var dist;
+		 
+		 function initialize(endAddress) {
+		 geocoder = new google.maps.Geocoder();
+		 return (distance(clientPosition, endAddress));
+		 }
+		 
+		 function distance(add1, add2) {
+		 if (!geocoder)
+		 return 'Error, no geocoder';
+		 
+		 addresses = new Array(2);
+		 addresses[0] = add1;
+		 addresses[1] = add2;
+		 results = new Array(2);
+		 results[0] = new Array(2);
+		 results[1] = new Array(2);
+		 
+		 results[0][0] = 0; results[0][1] = 0; results[1][0] = 0; results[1][1] = 0.87;
+		 return geocoded(1);
+		 
+		 }
+		 
+		 function geocoded(i) {
+		 geocoder.geocode( { 'address': addresses[i] }, function(res, status) {
+		 if (status == google.maps.GeocoderStatus.OK) {
+		 results[i][0] = parseFloat(res[0].geometry.location.lat());
+		 results[i][1] = parseFloat(res[0].geometry.location.lng());
+		 i--;
+		 
+		 if (i >= 0)
+		 geocoded(i);
+		 else
+		 {
+			alert("YAHHHHHHHHHHHH!!!!!!!!!!");
+			return distances(results[0][0], results[0][1], results[1][0], results[1][1]);
+		}
+		 
+		 }// if ok
+		 }); // geo coder add find
+		 }
+		 
+		 function distances(lat1, lon1, lat2, lon2) {
+		 // ACOS(SIN(lat1)*SIN(lat2)+COS(lat1)*COS(lat2)*COS(lon2-lon1))*6371
+		 // Convert lattitude/longitude (degrees) to radians for calculations
+		 var R = 3963.189; // meters
+		 
+		 // Find the deltas
+		 delta_lon = deg2rad(lon2) - deg2rad(lon1);
+		 
+		 // Find the Great Circle distance
+		 distance = Math.acos(Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+		 Math.cos(delta_lon)) * 3963.189;
+		 
+		 alert(distance + ' miles');
+		 return distance;
+		 }
+		 
+		 function deg2rad(val) {
+		 var pi = Math.PI;
+		 var de_ra = ((eval(val))*(pi/180));
+		 return de_ra;
+		 }*/
+		</script>
+	</body>
+</html>
